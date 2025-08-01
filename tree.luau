@@ -30,13 +30,9 @@ function Tree.new()
 	}
 end
 
-function Tree.left_rotation(self: Tree)
+function Tree.left_rotation(self: Tree) end
 
-end
-
-function Tree.right_rotation(self: Tree)
-
-end
+function Tree.right_rotation(self: Tree) end
 
 function Tree.insert(self: Tree, data: string)
 	if self.root == nil then
@@ -67,7 +63,7 @@ function Tree.insert(self: Tree, data: string)
 			end
 		end
 	end
-	
+
 	-- If the parent of the new node is Black, no properties are violated.
 	if parent_node.color == "Black" then
 		return
@@ -76,5 +72,12 @@ function Tree.insert(self: Tree, data: string)
 	-- The tree violates the Red property
 	-- A node has one or zero uncles, defined as the sibling of the parent.
 	local uncle: Node?
-	local grandparent = 
+	-- Grandparent is garuanteed to exist if rules are implemented correctly
+	local grandparent = parent_node.parent
+	assert(grandparent, "Grandparent nil!")
+	if grandparent.left == parent_node then
+		uncle = grandparent.right
+	else
+		uncle = grandparent.left
+	end
 end
