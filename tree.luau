@@ -30,9 +30,53 @@ function Tree.new()
 	}
 end
 
-function Tree.left_rotation(self: Tree) end
+function Tree.left_rotation(self: Tree, node: Node) end
 
-function Tree.right_rotation(self: Tree) end
+function Tree.right_rotation(self: Tree, node: Node) end
+
+local function fix_red_violation(tree: Tree, problem_node: Node)
+	-- The tree violates the Red property
+	-- A node has one or zero uncles, defined as the sibling of the parent.
+	local uncle: Node?
+	-- Grandparent is garuanteed to exist if rules are implemented correctly
+	local parent_node = problem_node.parent
+
+	if not parent_node then
+		print("no parent")
+		return
+	end
+
+	local grandparent = parent_node.parent
+
+	if not grandparent then
+		print("no grandparent")
+		return
+	end
+
+	if grandparent.left == parent_node then
+		uncle = grandparent.right
+	else
+		uncle = grandparent.left
+	end
+
+	if not uncle then
+		print("no uncle")
+		return
+	end
+
+	if uncle.color == "Red" then -- Is the above layer consistently red?
+		parent_node.color = "Black" -- Swap it to consistently black
+		uncle.color = "Black"
+		grandparent.color = "Red"
+
+		fix_red_violation(tree, grandparent)
+	elseif parent_node.left == problem_node then
+		tree:left_rotation(parent_node)
+	elseif parent_node.right == problem_node then
+		tree:right_rotation(grandparent)
+		-- TODO: "recolor appropriately"
+	end
+end
 
 function Tree.insert(self: Tree, data: string)
 	if self.root == nil then
@@ -69,15 +113,10 @@ function Tree.insert(self: Tree, data: string)
 		return
 	end
 
-	-- The tree violates the Red property
-	-- A node has one or zero uncles, defined as the sibling of the parent.
-	local uncle: Node?
-	-- Grandparent is garuanteed to exist if rules are implemented correctly
-	local grandparent = parent_node.parent
-	assert(grandparent, "Grandparent nil!")
-	if grandparent.left == parent_node then
-		uncle = grandparent.right
-	else
-		uncle = grandparent.left
-	end
+	-- We now have a red property violation
+	fix_red_violation(self)
 end
+
+function Tree.search(self: Tree, needle: string) end
+
+function Tree.delete(self: Tree, data: string) end
