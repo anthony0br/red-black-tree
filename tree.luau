@@ -23,6 +23,8 @@ type Tree = typeof(setmetatable(
     Red Property: Red nodes cannot have red children (no two consecutive red nodes on any path).
     Black Property: Every path from a node to its descendant null nodes (leaves) has the same number of black nodes.
     Leaf Property: All leaves (NIL nodes) are black.
+
+	(geeksforgeeks)
 ]]
 
 function Tree.new()
@@ -32,11 +34,25 @@ function Tree.new()
 end
 
 --[[
-Rotations are fundamental operations in maintaining the balanced structure of a Red-Black Tree (RBT).
-They help to preserve the properties of the tree, ensuring that the longest path from the root to any leaf is no more than twice the length of the shortest path.
-Rotations come in two types: left rotations and right rotations.
+Let y be the right child of x
+1. Set the right child of x to the left child of y + update parent pointers
+2. Set left child of y + update parent pointers
 ]]
-function Tree.left_rotation(self: Tree, node: Node) end
+-- TODO: Tutorial worksheet
+function Tree.left_rotation(self: Tree, x: Node)
+	local y = x.right
+
+	-- Step 1
+	x.right
+
+	-- Step 2
+
+	y.parent =
+
+	-- Find out whether x is a left or right node or root node, and update above
+	-- pointers appropriately
+	-- Check do we need to do this?? ^ Check against worksheet
+end
 
 function Tree.right_rotation(self: Tree, node: Node) end
 
@@ -127,6 +143,10 @@ function Tree.search(self: Tree, needle: string) end
 
 function Tree.delete(self: Tree, data: string) end
 
+-- The number of black nodes on any path from, but not including, a node x down to a leaf is
+-- the black-height of the node, denoted by bh(x). (Algorithms II notes)
+-- Includes the leaf (nil node) as black!
+-- TODO: Lemma 22
 function Tree.black_height() end
 
 function Tree.check_rules(self: Tree)
