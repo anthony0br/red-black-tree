@@ -96,12 +96,12 @@ function Tree.insert(self: Tree, data: string)
 	local new_node = Node("Red", data) -- Variables containing tables in Lua are like C pointers to a struct
 
 	-- Traverse the tree until we find an empty child slot where the BST full order is maintained
-	while current_node do
+	while current_node and current_node.data do
 		parent_node = current_node
-
 		if data <= current_node.data then
 			current_node = current_node.left
 
+			-- Note: we count "nil" pointers as 'empty black nodes'
 			if current_node == nil then
 				parent_node.left = new_node
 			end
@@ -126,3 +126,15 @@ end
 function Tree.search(self: Tree, needle: string) end
 
 function Tree.delete(self: Tree, data: string) end
+
+function Tree.black_height() end
+
+function Tree.check_rules(self: Tree)
+	-- Check BST order rule
+
+	-- Check Red rule
+
+	-- Check Black Height
+
+	-- other rules are kinda irrelevant lol
+end
