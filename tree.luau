@@ -1,5 +1,6 @@
 --!strict
 
+local node = require("./node")
 local Node = require("node.luau")
 
 type Node = Node.Node
@@ -30,6 +31,11 @@ function Tree.new()
 	}
 end
 
+--[[
+Rotations are fundamental operations in maintaining the balanced structure of a Red-Black Tree (RBT).
+They help to preserve the properties of the tree, ensuring that the longest path from the root to any leaf is no more than twice the length of the shortest path.
+Rotations come in two types: left rotations and right rotations.
+]]
 function Tree.left_rotation(self: Tree, node: Node) end
 
 function Tree.right_rotation(self: Tree, node: Node) end
@@ -114,7 +120,7 @@ function Tree.insert(self: Tree, data: string)
 	end
 
 	-- We now have a red property violation
-	fix_red_violation(self)
+	fix_red_violation(self, new_node)
 end
 
 function Tree.search(self: Tree, needle: string) end

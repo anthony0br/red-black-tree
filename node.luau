@@ -2,7 +2,7 @@
 
 export type Node = {
 	color: "Red" | "Black",
-	data: string,
+	data: string | nil,
 	left: Node?,
 	right: Node?,
 	parent: Node?,
