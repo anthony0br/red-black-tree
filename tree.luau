@@ -37,24 +37,58 @@ end
 Let y be the right child of x
 1. Set the right child of x to the left child of y + update parent pointers
 2. Set left child of y + update parent pointers
+
+We are essentially moving the right child up and then redrawing the tree to
+satisfy the BST property.
+
+x
+ \
+  y
+ / \
+a   b
 ]]
--- TODO: Tutorial worksheet
 function Tree.left_rotation(self: Tree, x: Node)
+	local final_parent = x.parent
 	local y = x.right
+	assert(y)
+	local a = y.left
+	assert(a)
 
 	-- Step 1
-	x.right
+	x.right = a
+	a.parent = x
 
 	-- Step 2
+	y.left = x
+	x.parent = y
 
-	y.parent =
-
-	-- Find out whether x is a left or right node or root node, and update above
-	-- pointers appropriately
-	-- Check do we need to do this?? ^ Check against worksheet
+	y.parent = final_parent
 end
 
-function Tree.right_rotation(self: Tree, node: Node) end
+--[[
+    x
+   /
+  y
+ / \
+a   b
+]]
+function Tree.right_rotation(self: Tree, x: Node)
+	local final_parent = x.parent
+	local y = x.left
+	assert(y)
+	local b = y.right
+	assert(b)
+
+	-- Step 1
+	x.left = b
+	b.parent = x
+
+	-- Step 2
+	y.right = x
+	x.parent = y
+
+	y.parent = final_parent
+end
 
 local function fix_red_violation(tree: Tree, problem_node: Node)
 	-- The tree violates the Red property
