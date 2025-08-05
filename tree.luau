@@ -123,7 +123,10 @@ local function fix_red_violation(tree: Tree, problem_node: Node)
 	if uncle.color == "Red" then -- Is the above layer consistently red?
 		parent_node.color = "Black" -- Swap it to consistently black
 		uncle.color = "Black"
-		grandparent.color = "Red"
+
+		if grandparent ~= tree.root then
+			grandparent.color = "Red"
+		end
 
 		fix_red_violation(tree, grandparent)
 	elseif parent_node.left == problem_node then
