@@ -115,12 +115,8 @@ local function fix_red_violation(tree: Tree, problem_node: Node)
 		uncle = grandparent.left
 	end
 
-	if not uncle then
-		print("no uncle")
-		return
-	end
-
-	if uncle.color == "Red" then -- Is the above layer consistently red?
+	-- If the uncle is a nil node, then we count it as black.
+	if uncle ~= nil and uncle.color == "Red" then -- Is the above layer consistently red?
 		parent_node.color = "Black" -- Swap it to consistently black
 		uncle.color = "Black"
 
